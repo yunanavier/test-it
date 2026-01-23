@@ -46,7 +46,7 @@ public class TaskServiceTest {
         return u;
     }
     @Test
-    void createTask_oki() {
+    void createTask_ok() {
         User requested= user(10L, "req");
         User assigned= user(10L, "ass");
 
