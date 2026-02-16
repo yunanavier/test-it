@@ -17,6 +17,10 @@ import org.springframework.transaction.annotation.Transactional;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
+import org.springframework.security.test.context.support.WithMockUser;
+
+@WithMockUser(username="testuser", roles="USER")
+
 @SpringBootTest
 @AutoConfigureMockMvc
 @Transactional
@@ -35,7 +39,6 @@ class TaskControllerTest {
 
     @BeforeEach
     void setUp() {
-        // Créer un utilisateur de test en DB
         User user = new User("testuser");
         userRepository.save(user);
         userId = user.getId();

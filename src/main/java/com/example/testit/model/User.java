@@ -1,6 +1,7 @@
 package com.example.testit.model;
 
 import jakarta.persistence.*;
+import com.example.testit.model.Role;
 
 import java.util.List;
 
@@ -13,6 +14,24 @@ public class User {
 
     private String username;
 
+    private String password;
+
+    @Enumerated(EnumType.STRING)
+    private Role role = Role.USER;
+
+    private boolean enabled = true;
+
+    public String getPassword() { return password; }
+    public void setPassword(String password) { this.password = password; }
+
+    public Role getRole() { return role; }
+    public void setRole(Role role) { this.role = role; }
+
+
+
+    public boolean isEnabled() { return enabled; }
+    public void setEnabled(boolean enabled) { this.enabled = enabled; }
+
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "manager_id")
@@ -22,6 +41,8 @@ public class User {
 
     public User(String username) {
         this.username = username;
+        this.role = Role.USER;
+        this.enabled = true;
     }
 
     // Getters and setters

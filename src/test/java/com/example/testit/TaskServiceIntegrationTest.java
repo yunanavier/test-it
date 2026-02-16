@@ -34,13 +34,14 @@ class TaskServiceIntegrationTest {
 
     @BeforeEach
     void setUp() {
+        taskRepository.deleteAll();
+        taskRepository.flush();
         userRepository.deleteAll();
+        userRepository.flush();
         user1 = userRepository.save(new User("user1"));
         user2 = userRepository.save(new User("user2"));
 
-        // Créer des tâches (IDs générés automatiquement)
-        task1 = taskService.createTask("Task 1", "Desc 1", user1.getId(), user1.getId());
-        task2 = taskService.createTask("Task 2", "Desc 2", user1.getId(), user1.getId());
+
     }
 
     @Test

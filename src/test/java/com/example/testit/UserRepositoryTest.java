@@ -30,17 +30,17 @@ class UserRepositoryTest {
     void findByUsername_shouldReturnUser_whenExists() {
         User user = userRepository.save(new User("findme"));
 
-        User found = userRepository.findByUsername("findme");
+        Optional<User> found = userRepository.findByUsername("findme");
 
-        assertThat(found).isNotNull();
-        assertThat(found.getUsername()).isEqualTo("findme");
+        assertThat(found).isPresent();
+        assertThat(found.get().getUsername()).isEqualTo("findme");
     }
 
     @Test
-    void findByUsername_shouldReturnNull_whenNotExists() {
-        User found = userRepository.findByUsername("nonexistent");
+    void findByUsername_shouldReturnEmpty_whenNotExists() {
+        Optional<User> found = userRepository.findByUsername("findme");
 
-        assertThat(found).isNull();
+        assertThat(found).isEmpty();
     }
 
     @Test

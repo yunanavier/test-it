@@ -36,14 +36,21 @@ public class TaskService {
     public List<Task> findByUserId(Long userId) {
         return taskRepository.findByAssignedUserId(userId);
     }
+    @Transactional
+    public Task createTask(String title, String description, Long assignedUserId, Long requesterId) {
+        User assigned = userRepository.findById(assignedUserId)
+                .orElseThrow(() -> new IllegalArgumentException("User not found"));
 
-    public Task createTask(String title, String description, Long requesterId, Long assignedId) {
         User requester = userRepository.findById(requesterId)
-                .orElseThrow(() -> new IllegalArgumentException("Requester not found"));
-        User assigned = userRepository.findById(assignedId)
-                .orElseThrow(() -> new IllegalArgumentException("Assigned user not found"));
-        Task task = new Task(title, description, assigned);
+                .orElseThrow(() -> new IllegalArgumentException("User not found"));
+
+        Task task = new Task();
+        task.setTitle(title);
+        task.setDescription(description);
+        task.setAssignedUser(assigned);
         task.setRequester(requester);
+        task.setStatus(Status.OUVERT);
+
         return taskRepository.save(task);
     }
 
